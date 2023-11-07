@@ -1,6 +1,7 @@
 import cmath
 import math
 
+#Pads the inputed vector with 0's
 def pad_with_zeros(vector, length):
     n = len(vector)
     padded_vector = vector + [0] * (length - n)
@@ -28,7 +29,7 @@ def round_complex_number(num):
     else:
         return "0"
 
-
+#implements the fast fourier transfer
 def fft(x):
     n = len(x)
     next_pow_2 = int(2 ** math.ceil(math.log2(n)))  # Find the next power of 2
@@ -50,7 +51,7 @@ def fft(x):
 
     return result
 
-
+#implements the inverse fast fourier transfer
 def ifft(x):
     n = len(x)
 
@@ -68,7 +69,7 @@ def ifft(x):
 
     return [(num / n) for num in ifft_result]  # Scale the output by 1/n
 
-
+#does convolution on 2 vectors
 def convolution(x, y):
     n = len(x) + len(y) - 1
     next_pow_2 = int(2 ** math.ceil(math.log2(n)))  # Find the next power of 2
@@ -83,7 +84,7 @@ def convolution(x, y):
 
     return convolution_result[:n]
 
-# Testing FFT, IFFT, CONV Functions
+"""# Testing FFT, IFFT, CONV Functions
 x = [0, 1, 0, 1, 0]
 y = [1, 0, 1, 0, 1]
 
@@ -91,9 +92,9 @@ fft_result = fft(x)
 ifft_result = ifft(fft_result)
 convolution_result = convolution(x, y)
 
-print("FFT result:", [round_complex_number(num) for num in fft_result])
-print("IFFT result:", [round_complex_number(num) for num in ifft_result])
-print("Convolution result:", [round_complex_number(num) for num in convolution_result])
+print("FFT result:\n", [round_complex_number(num) for num in fft_result],"\n")
+print("IFFT result:\n\n", [round_complex_number(num) for num in ifft_result],"\n")
+print("Convolution result:\n\n", [round_complex_number(num) for num in convolution_result],"\n")"""
 
 # Problem  1
 
@@ -110,10 +111,90 @@ def find_coefficients(roots):
     coefficients = [round_complex_number(num) for num in polynomial]
     return coefficients
 
-roots = [1.4142, -1.4142, -1]
+"""roots = [1.4142, -1.4142, -1]
 
 coefficients = find_coefficients(roots)
-print("Coefficients:", coefficients)
+print("Coefficients:", coefficients)"""
+
+
+#Problem 2: Taken from the handout
+def divide(A,B):   #A is a vector of length n and B is a vector of length m where m<=n
+    if len(A)>len(B):
+        pad_with_zeros(B,len(A)) #May need to fix, need to ask what Len is passed
+
+    f1 = FFT(A)
+    f2 = FFT(B)
+
+    length = len(f1)
+    f3 = [length]  #third vector initalized with length of f1
+
+    for j in length-1:
+        if f2[j] == 0:
+            #supposed to add a small constant to some coefficients of A(x)
+            print("Add small constant later")
+        f3[j] = f1[j]/f2[j]
+
+    f4 = IFFT(f3)
+    """
+        Write function to trim 0's from IFFT before returning f4 to the user!
+    """
+    return f4
+
+#Will take an input from a user
+def main():
+    print("\t---Questions---")
+    print("1\t2\t3\t4")
+    quest = int(input("Enter a problem to solve: "))
+
+    match quest:
+        case 1:
+            print("1")
+        case 2:
+            print("2")
+        case 3:
+            print("3")
+        case 4:
+            print("Goodbye")
+    # Testing FFT, IFFT, CONV Functions
+    x = [0, 1, 0, 1, 0]
+    y = [1, 0, 1, 0, 1]
+
+    fft_result = fft(x)
+    ifft_result = ifft(fft_result)
+    convolution_result = convolution(x, y)
+
+    print("FFT result:\n", [round_complex_number(num) for num in fft_result],"\n")
+    print("IFFT result:\n\n", [round_complex_number(num) for num in ifft_result],"\n")
+    print("Convolution result:\n\n", [round_complex_number(num) for num in convolution_result],"\n")
+
+    roots = [1.4142, -1.4142, -1]
+
+    coefficients = find_coefficients(roots)
+    print("Coefficients:", coefficients)
 
 
 
+
+    """
+    TO DO:
+        Finish some small code changes for problem two
+        Implement all of problem 3
+
+        In main:
+            Make it so the match statements call their respective function
+            Write a function for file inputs and reading
+                Test with Ravi given code
+            
+        Last things:
+            Reread all of the project details to make sure they were followed correctly. If there are any quesitons ask in Piazza 
+            Ravi is here to help and would rather you ask then not answer the question!
+
+        Final thing:
+            Breath!
+
+    """
+
+
+
+
+main()
