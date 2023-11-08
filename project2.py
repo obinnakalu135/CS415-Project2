@@ -116,6 +116,12 @@ def find_coefficients(roots):
 coefficients = find_coefficients(roots)
 print("Coefficients:", coefficients)"""
 
+def trim_zeros(vector):
+    while vector[-1] == 0:
+        vector.pop()
+            
+    return vector
+
 
 #Problem 2: Taken from the handout
 def divide(A,B):   #A is a vector of length n and B is a vector of length m where m<=n
@@ -135,11 +141,24 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
         f3[j] = f1[j]/f2[j]
 
     f4 = IFFT(f3)
-    """
-        Write function to trim 0's from IFFT before returning f4 to the user!
-    """
+
+    f4 = trim_zeros(f4) #Write function to trim 0's from IFFT before returning f4 to the user!
+
     return f4
 
+#Read file from user
+"""
+    Build a parser to read the file
+    Highly suggest reading between [] and throwing into an array
+    Skip over whitespace and , 
+
+    
+def inp_file(file):
+    F = open(file,'r') # 'r' is here to set the file to read mode
+    line = F.readlines()
+    F.close()
+    return line
+"""
 #Will take an input from a user
 def main():
     print("\t---Questions---")
@@ -148,6 +167,8 @@ def main():
 
     match quest:
         case 1:
+            name = input("Enter the name of the file to read: ")
+            F = inp_file(name)
             print("1")
         case 2:
             print("2")
@@ -190,7 +211,12 @@ def main():
             Ravi is here to help and would rather you ask then not answer the question!
 
         Final thing:
-            Breath!
+            Output CPU time after each problem is called. See time.process_time
+
+
+
+            How to read file
+            /Users/franco/Documents/GitHub/p2-test-cases.txt
 
     """
 
