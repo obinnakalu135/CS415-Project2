@@ -1,5 +1,6 @@
 import cmath
 import math
+import random
 
 #Pads the inputed vector with 0's
 def pad_with_zeros(vector, length):
@@ -125,22 +126,32 @@ def trim_zeros(vector):
 
 #Problem 2: Taken from the handout
 def divide(A,B):   #A is a vector of length n and B is a vector of length m where m<=n
-    if len(A)>len(B):
-        pad_with_zeros(B,len(A)) #May need to fix, need to ask what Len is passed
+   
+    n = len(A) + len(B) - 1
+    next_pow_2 = int(2 ** math.ceil(math.log2(n)))
+    A = pad_with_zeros(A,n) #May need to fix, need to ask what Len is passed
+    B = pad_with_zeros(B,n)
 
-    f1 = FFT(A)
-    f2 = FFT(B)
+    f1 = fft(A)
+    f2 = fft(B)
+
+    #Have python choose some small number to add to A in case f2 is a 0
+    constant = random.uniform(0, 1e-10)
+    A_perturbed = []
+    for i in range(len(A)):
+        A_perturbed.append(A[i] + constant)
 
     length = len(f1)
-    f3 = [length]  #third vector initalized with length of f1
-
-    for j in length-1:
-        if f2[j] == 0:
-            #supposed to add a small constant to some coefficients of A(x)
-            print("Add small constant later")
-        f3[j] = f1[j]/f2[j]
-
-    f4 = IFFT(f3)
+    f3 = [0] * length  #third vector initalized with length of f1
+    
+    j = 0
+    while (j <= length-1):
+        if f2[j] == 0.0:
+            f3[j] = A_perturbed[j]
+        else:    
+            f3[j] = f1[j]/f2[j]
+        j += 1
+    f4 = ifft(f3)
 
     f4 = trim_zeros(f4) #Write function to trim 0's from IFFT before returning f4 to the user!
 
@@ -149,16 +160,17 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 #Read file from user    
 def inp_file(filename):
     extracted_values = []
-    filename = "/Users/franco/Documents/GitHub/p2-test-case1.txt"
+    #filename = "/Users/franco/Documents/GitHub/CS415-Probject2/p2-test-case1.txt"
     with open(filename, 'r') as f:
         lines = f.readlines()
 
     for line in lines:
         # Extract individual values from the array declaration
         for value in line.strip('[]').split(','):
-            extracted_values.append(int(value))
+            extracted_values.append(float(value))
+           
 
-    print(extracted_values)
+    #print(extracted_values)
     return extracted_values
 
 
@@ -177,9 +189,12 @@ def main():
         case 2:
             name = input("Enter the name of the first file to read: ")
             second = input("Enter the name of the second file to read: ")
+            name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2a.txt"
+            second = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2b.txt"
             F = inp_file(name)
             F2 = inp_file(second)
-            print(divide(F,F2)) 
+            result = divide(F,F2) 
+            print("Divide result:\n ", result)
 
         case 3:
             print("3")
@@ -210,13 +225,7 @@ def main():
 
     """
     TO DO:
-        Finish some small code changes for problem two
         Implement all of problem 3
-
-        In main:
-            Make it so the match statements call their respective function
-            Write a function for file inputs and reading
-                Test with Ravi given code
             
         Last things:
             Reread all of the project details to make sure they were followed correctly. If there are any quesitons ask in Piazza 
@@ -231,8 +240,6 @@ def main():
             /Users/franco/Documents/GitHub/p2-test-cases.txt
 
     """
-
-
 
 
 main()
