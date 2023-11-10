@@ -146,19 +146,23 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 
     return f4
 
-#Read file from user
-"""
-    Build a parser to read the file
-    Highly suggest reading between [] and throwing into an array
-    Skip over whitespace and , 
+#Read file from user    
+def inp_file(filename):
+    extracted_values = []
+    filename = "/Users/franco/Documents/GitHub/p2-test-case1.txt"
+    with open(filename, 'r') as f:
+        lines = f.readlines()
 
-    
-def inp_file(file):
-    F = open(file,'r') # 'r' is here to set the file to read mode
-    line = F.readlines()
-    F.close()
-    return line
-"""
+    for line in lines:
+        # Extract individual values from the array declaration
+        for value in line.strip('[]').split(','):
+            extracted_values.append(int(value))
+
+    print(extracted_values)
+    return extracted_values
+
+
+
 #Will take an input from a user
 def main():
     print("\t---Questions---")
@@ -169,13 +173,21 @@ def main():
         case 1:
             name = input("Enter the name of the file to read: ")
             F = inp_file(name)
-            print("1")
+            print(find_coefficients(F))
         case 2:
-            print("2")
+            name = input("Enter the name of the first file to read: ")
+            second = input("Enter the name of the second file to read: ")
+            F = inp_file(name)
+            F2 = inp_file(second)
+            print(divide(F,F2)) 
+
         case 3:
             print("3")
         case 4:
             print("Goodbye")
+
+
+    """
     # Testing FFT, IFFT, CONV Functions
     x = [0, 1, 0, 1, 0]
     y = [1, 0, 1, 0, 1]
@@ -193,7 +205,7 @@ def main():
     coefficients = find_coefficients(roots)
     print("Coefficients:", coefficients)
 
-
+    """
 
 
     """
