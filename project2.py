@@ -99,23 +99,24 @@ print("Convolution result:\n\n", [round_complex_number(num) for num in convoluti
 
 # Problem  1
 
-def multiply_polynomials(polynomials):
-    result = [1]
-    for polynomial in polynomials:
-        result = convolution(result, polynomial)
-    return result
+def polynomial_coefficients(roots):
+    n = len(roots) + 1
+    coefficients = [0] * n
+    coefficients[0] = 1
+
+    for root in roots:
+        temp = coefficients.copy()
+        for i in range(n):
+            coefficients[i] = temp[i] - (root * temp[i - 1] if i >= 1 else 0)
+    
+    return coefficients[::-1]
 
 
-def find_coefficients(roots):
-    linear_factors = [[1, -root] for root in roots]
-    polynomial = multiply_polynomials(linear_factors)
-    coefficients = [round_complex_number(num) for num in polynomial]
-    return coefficients
+roots = [54, 23, 27, 33, 52, 51, 6, 83, 29, 86, 51, 31, 70, 77, 94, 5, 28, 28, 53, 91, 38, 32, 21, 85, 74, 30, 78, 85, 51, 75, 93, 44, 16, 0, 14, 43, 55, 5, 44, 61, 86, 57, 66, 73, 93, 31, 24, 30, 84, 35]
 
-"""roots = [1.4142, -1.4142, -1]
 
-coefficients = find_coefficients(roots)
-print("Coefficients:", coefficients)"""
+coefficients = polynomial_coefficients(roots)
+print("Coefficients:", coefficients)
 
 def trim_zeros(vector):
     while vector[-1] == 0:
