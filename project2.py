@@ -167,6 +167,22 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 
     return f4
 
+#Problem 3
+def signal_input(A,threshold):
+    threshold = 0.01
+    A_fft = fft(A)
+
+    for num in range(len(A_fft)):
+        if abs(A_fft[num]) < threshold:
+            A_fft[num] = 0
+
+    A_ifft = ifft(A_fft)
+
+    return A_ifft
+
+
+
+
 #Read file from user    
 def inp_file(filename):
     extracted_values = []
@@ -208,7 +224,12 @@ def main():
             #print("Divide result:\n ", [simplify_complex_number(num)for num in result])
 
         case 3:
-            print("3")
+            name = input("Enter the name of the file to read: ")
+            threshold = float(input("Enter the threshold to remove: "))
+            name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case3.txt"
+            F = inp_file(name)
+            result = signal_input(F, threshold)
+            print(result)
         case 4:
             print("Goodbye")
 
