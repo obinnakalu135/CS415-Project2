@@ -152,6 +152,7 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 
     return f4
 
+
 #Problem 3
 def signal_input(A,threshold):
     threshold = 0.01
@@ -164,8 +165,6 @@ def signal_input(A,threshold):
     A_ifft = ifft(A_fft)
 
     return A_ifft
-
-
 
 
 #Read file from user    
@@ -221,7 +220,8 @@ def main():
 
     """
     # Testing FFT, IFFT, CONV Functions
-    x = [0, 1, 0, 1, 0]
+    x = [0, 1, 0, 1, 0]2
+
     y = [1, 0, 1, 0, 1]
 
     fft_result = fft(x)
