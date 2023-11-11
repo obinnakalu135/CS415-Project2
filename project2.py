@@ -122,7 +122,17 @@ def trim_zeros(vector):
         vector.pop()
             
     return vector
+"""
+def simplify_complex_number(complex_number):
 
+  modulus, argument = cmath.polar(complex_number)
+  if modulus == 0:
+    modulus = 1e-12
+  modulus = round(modulus, 6)
+  argument = round(argument, 6)
+  simplified_complex_number = cmath.rect(modulus, argument)
+  return simplified_complex_number
+"""
 
 #Problem 2: Taken from the handout
 def divide(A,B):   #A is a vector of length n and B is a vector of length m where m<=n
@@ -153,7 +163,7 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
         j += 1
     f4 = ifft(f3)
 
-    f4 = trim_zeros(f4) #Write function to trim 0's from IFFT before returning f4 to the user!
+    f4 = trim_zeros(f4) 
 
     return f4
 
@@ -194,7 +204,8 @@ def main():
             F = inp_file(name)
             F2 = inp_file(second)
             result = divide(F,F2) 
-            print("Divide result:\n ", result)
+            print(type(result[0]))
+            #print("Divide result:\n ", [simplify_complex_number(num)for num in result])
 
         case 3:
             print("3")
