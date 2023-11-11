@@ -5,30 +5,14 @@ import random
 #Pads the inputed vector with 0's
 def pad_with_zeros(vector, length):
     n = len(vector)
-    padded_vector = vector + [0] * (length - n)
+    padded_vector = vector + [0] * (int(length) - n)
     return padded_vector
 
 
 def round_complex_number(num):
     # Check if real or imaginary parts are within 0.0001 of an integer
-    real = round(num.real) if abs(num.real % 1) < 0.0001 else round(num.real, 4)
-    imag = round(num.imag) if abs(num.imag % 1) < 0.0001 else round(num.imag, 4)
-    
-    # Omit 0 real part or 0 imaginary part
-    if real != 0:
-        if imag == 0:
-            return f"{real}"
-        elif imag == 1:
-            return f"{real}j"
-        else:
-            return f"{real}+{imag}j"
-    elif imag != 0:
-        if imag == 1:
-            return "j"
-        else:
-            return f"{imag}j"
-    else:
-        return "0"
+    real = round(num.real) if abs(num.real % 1) == 1 else 0
+    return real
 
 #implements the fast fourier transfer
 def fft(x):
@@ -99,7 +83,7 @@ print("Convolution result:\n\n", [round_complex_number(num) for num in convoluti
 
 # Problem  1
 
-def polynomial_coefficients(roots):
+def find_coefficients(roots):
     n = len(roots) + 1
     coefficients = [0] * n
     coefficients[0] = 1
@@ -115,7 +99,7 @@ def polynomial_coefficients(roots):
 roots = [54, 23, 27, 33, 52, 51, 6, 83, 29, 86, 51, 31, 70, 77, 94, 5, 28, 28, 53, 91, 38, 32, 21, 85, 74, 30, 78, 85, 51, 75, 93, 44, 16, 0, 14, 43, 55, 5, 44, 61, 86, 57, 66, 73, 93, 31, 24, 30, 84, 35]
 
 
-coefficients = polynomial_coefficients(roots)
+coefficients = find_coefficients(roots)
 print("Coefficients:", coefficients)
 
 def trim_zeros(vector):
