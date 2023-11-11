@@ -69,7 +69,8 @@ def convolution(x, y):
 
     return convolution_result[:n]
 
-"""# Testing FFT, IFFT, CONV Functions
+"""
+# Testing FFT, IFFT, CONV Functions
 x = [0, 1, 0, 1, 0]
 y = [1, 0, 1, 0, 1]
 
@@ -79,7 +80,8 @@ convolution_result = convolution(x, y)
 
 print("FFT result:\n", [round_complex_number(num) for num in fft_result],"\n")
 print("IFFT result:\n\n", [round_complex_number(num) for num in ifft_result],"\n")
-print("Convolution result:\n\n", [round_complex_number(num) for num in convolution_result],"\n")"""
+print("Convolution result:\n\n", [round_complex_number(num) for num in convolution_result],"\n")
+"""
 
 # Problem  1
 
@@ -95,13 +97,13 @@ def find_coefficients(roots):
     
     return coefficients[::-1]
 
-
+"""
 roots = [54, 23, 27, 33, 52, 51, 6, 83, 29, 86, 51, 31, 70, 77, 94, 5, 28, 28, 53, 91, 38, 32, 21, 85, 74, 30, 78, 85, 51, 75, 93, 44, 16, 0, 14, 43, 55, 5, 44, 61, 86, 57, 66, 73, 93, 31, 24, 30, 84, 35]
 
 
 coefficients = find_coefficients(roots)
 print("Coefficients:", coefficients)
-
+"""
 def trim_zeros(vector):
     while vector[-1] == 0:
         vector.pop()
@@ -124,7 +126,7 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
    
     n = len(A) + len(B) - 1
     next_pow_2 = int(2 ** math.ceil(math.log2(n)))
-    A = pad_with_zeros(A,n) #May need to fix, need to ask what Len is passed
+    A = pad_with_zeros(A,n)
     B = pad_with_zeros(B,n)
 
     f1 = fft(A)
@@ -154,10 +156,19 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 
 #Problem 3
 def signal_input(A,threshold):
-    threshold = 0.01
+    #threshold = 0.01
     A_fft = fft(A)
+    """
+    Tried taking the abolute value of the array and then taking the real and imaginary numbers out. This does not work as "A_fft is a list"
+    
+    abs_value = abs(A_fft)
+    real_parts = abs_value.real()
+    img_parts = abs_value.imag()
 
+    print (real_parts)
+    """
     for num in range(len(A_fft)):
+        #real_parts = A_fft[num].real()
         if abs(A_fft[num]) < threshold:
             A_fft[num] = 0
 
@@ -200,21 +211,21 @@ def main():
         case 2:
             name = input("Enter the name of the first file to read: ")
             second = input("Enter the name of the second file to read: ")
-            name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2a.txt"
-            second = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2b.txt"
+            #name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2a.txt"
+            #second = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case2b.txt"
             F = inp_file(name)
             F2 = inp_file(second)
             result = divide(F,F2) 
-            print(type(result[0]))
-            #print("Divide result:\n ", [simplify_complex_number(num)for num in result])
+            #print(type(result[0]))
+            print("Divide result:\n ", [round_complex_number(num) for num in result])
 
         case 3:
             name = input("Enter the name of the file to read: ")
             threshold = float(input("Enter the threshold to remove: "))
-            name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case3.txt"
+            #name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case3.txt"
             F = inp_file(name)
             result = signal_input(F, threshold)
-            print(result)
+            print (result)
         case 4:
             print("Goodbye")
 
@@ -242,16 +253,8 @@ def main():
 
     """
     TO DO:
-        Implement all of problem 3
-            
-        Last things:
-            Reread all of the project details to make sure they were followed correctly. If there are any quesitons ask in Piazza 
-            Ravi is here to help and would rather you ask then not answer the question!
-
         Final thing:
             Output CPU time after each problem is called. See time.process_time
-
-
 
             How to read file
             /Users/franco/Documents/GitHub/p2-test-cases.txt
