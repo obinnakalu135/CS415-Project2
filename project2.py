@@ -155,6 +155,7 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
     return f4
 
 
+
 #Problem 3
 def signal_input(A,threshold):
     #threshold = 0.01
