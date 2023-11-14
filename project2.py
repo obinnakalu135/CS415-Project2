@@ -160,24 +160,25 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 def signal_input(A,threshold):
     #threshold = 0.01
     A_fft = fft(A)
-    """
-    Tried taking the abolute value of the array and then taking the real and imaginary numbers out. This does not work as "A_fft is a list"
     
-    abs_value = abs(A_fft)
-    real_parts = abs_value.real()
-    img_parts = abs_value.imag()
+    #Tried taking the abolute value of the array and then taking the real and imaginary numbers out. This does not work as "A_fft is a list"
+    abs_value = [abs(i) for i in A_fft]
 
-    print (real_parts)
     """
+    #abs_value = abs(A_fft)
+    #real_parts = abs_value.real()
+    #img_parts = abs_value.imag()
+    print (abs_balue)
+    """
+
     for num in range(len(A_fft)):
         #real_parts = A_fft[num].real()
-        if abs(A_fft[num]) < threshold:
-            A_fft[num] = 0
+        if abs_value[num] < threshold:
+            abs_value[num] = 0
 
-    A_ifft = ifft(A_fft)
+    A_ifft = ifft(abs_value)
 
     return A_ifft
-
 
 #Read file from user    
 def inp_file(filename):
@@ -208,6 +209,7 @@ def main():
             name = input("Enter the name of the file to read: ")
             F = inp_file(name)
             print(find_coefficients(F))
+            
         case 2:
             name = input("Enter the name of the first file to read: ")
             second = input("Enter the name of the second file to read: ")
@@ -217,7 +219,7 @@ def main():
             F2 = inp_file(second)
             result = divide(F,F2) 
             #print(type(result[0]))
-            print("Divide result:\n ", [round_complex_number(num) for num in result])
+            print("Divide result:\n ", result)
 
         case 3:
             name = input("Enter the name of the file to read: ")
@@ -225,7 +227,8 @@ def main():
             #name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case3.txt"
             F = inp_file(name)
             result = signal_input(F, threshold)
-            print (result)
+            print ("Signal Result \n", result)
+
         case 4:
             print("Goodbye")
 
