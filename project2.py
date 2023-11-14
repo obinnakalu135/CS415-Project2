@@ -1,6 +1,18 @@
+'''
+Contributions: Obinna Kalu, Jacob Franco
+Works: All functionality described in spec works except the following
+Does Not Work: Timing function for operations; Simplification for output in Problems 2 and 3; 
+Problem 1 outputs mostly the desired result with some erroneous values at the beginning and end of array
+
+'''
+
+
+
 import cmath
 import math
 import random
+
+
 
 #Pads the inputed vector with 0's
 def pad_with_zeros(vector, length):
@@ -160,25 +172,24 @@ def divide(A,B):   #A is a vector of length n and B is a vector of length m wher
 def signal_input(A,threshold):
     #threshold = 0.01
     A_fft = fft(A)
+    """
+    Tried taking the abolute value of the array and then taking the real and imaginary numbers out. This does not work as "A_fft is a list"
     
-    #Tried taking the abolute value of the array and then taking the real and imaginary numbers out. This does not work as "A_fft is a list"
-    abs_value = [abs(i) for i in A_fft]
+    abs_value = abs(A_fft)
+    real_parts = abs_value.real()
+    img_parts = abs_value.imag()
 
+    print (real_parts)
     """
-    #abs_value = abs(A_fft)
-    #real_parts = abs_value.real()
-    #img_parts = abs_value.imag()
-    print (abs_balue)
-    """
-
     for num in range(len(A_fft)):
         #real_parts = A_fft[num].real()
-        if abs_value[num] < threshold:
-            abs_value[num] = 0
+        if abs(A_fft[num]) < threshold:
+            A_fft[num] = 0
 
-    A_ifft = ifft(abs_value)
+    A_ifft = ifft(A_fft)
 
     return A_ifft
+
 
 #Read file from user    
 def inp_file(filename):
@@ -209,7 +220,6 @@ def main():
             name = input("Enter the name of the file to read: ")
             F = inp_file(name)
             print(find_coefficients(F))
-            
         case 2:
             name = input("Enter the name of the first file to read: ")
             second = input("Enter the name of the second file to read: ")
@@ -219,7 +229,7 @@ def main():
             F2 = inp_file(second)
             result = divide(F,F2) 
             #print(type(result[0]))
-            print("Divide result:\n ", result)
+            print("Divide result:\n ", [round_complex_number(num) for num in result])
 
         case 3:
             name = input("Enter the name of the file to read: ")
@@ -227,32 +237,9 @@ def main():
             #name = "/Users/franco/Documents/GitHub/CS415-Project2/p2-test-case3.txt"
             F = inp_file(name)
             result = signal_input(F, threshold)
-            print ("Signal Result \n", result)
-
+            print (result)
         case 4:
             print("Goodbye")
-
-
-    """
-    # Testing FFT, IFFT, CONV Functions
-    x = [0, 1, 0, 1, 0]2
-
-    y = [1, 0, 1, 0, 1]
-
-    fft_result = fft(x)
-    ifft_result = ifft(fft_result)
-    convolution_result = convolution(x, y)
-
-    print("FFT result:\n", [round_complex_number(num) for num in fft_result],"\n")
-    print("IFFT result:\n\n", [round_complex_number(num) for num in ifft_result],"\n")
-    print("Convolution result:\n\n", [round_complex_number(num) for num in convolution_result],"\n")
-
-    roots = [1.4142, -1.4142, -1]
-
-    coefficients = find_coefficients(roots)
-    print("Coefficients:", coefficients)
-
-    """
 
 
     """
